@@ -3,20 +3,42 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import { useCallback, useEffect, useState } from 'react'
 
+import { ImageLightbox } from '@/components/Lightbox/ImageLightbox'
 import type { CarouselSlide } from '@/types/types'
 
 type CarouselProps = {
+  enableLightbox?: boolean
   slides: CarouselSlide[]
 }
 
-export function Carousel({ slides }: CarouselProps) {
+export function Carousel({ enableLightbox = false, slides }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
   const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi])
+  const closeLightbox = useCallback(() => setLightboxIndex(null), [])
+  const showNextImage = useCallback(() => {
+    setLightboxIndex((currentIndex) => {
+      if (currentIndex === null) {
+        return 0
+      }
+
+      return (currentIndex + 1) % slides.length
+    })
+  }, [slides.length])
+  const showPreviousImage = useCallback(() => {
+    setLightboxIndex((currentIndex) => {
+      if (currentIndex === null) {
+        return 0
+      }
+
+      return (currentIndex - 1 + slides.length) % slides.length
+    })
+  }, [slides.length])
 
   useEffect(() => {
     if (!emblaApi) {
@@ -51,12 +73,27 @@ export function Carousel({ slides }: CarouselProps) {
               {slides.map((slide, index) => (
                 <div className="min-w-0 flex-[0_0_100%]" key={`${slide.src}-${index}`}>
                   <div className="relative flex h-[420px] w-full items-center justify-center bg-neutral-950 md:h-[640px]">
-                    <img
-                      alt={slide.alt}
-                      className="h-full w-full object-contain"
-                      loading={index === 0 ? 'eager' : 'lazy'}
-                      src={slide.src}
-                    />
+                    {enableLightbox ? (
+                      <button
+                        className="h-full w-full cursor-zoom-in"
+                        onClick={() => setLightboxIndex(index)}
+                        type="button"
+                      >
+                        <img
+                          alt={slide.alt}
+                          className="h-full w-full object-contain transition-transform duration-200 ease-out hover:scale-[1.01]"
+                          loading={index === 0 ? 'eager' : 'lazy'}
+                          src={slide.src}
+                        />
+                      </button>
+                    ) : (
+                      <img
+                        alt={slide.alt}
+                        className="h-full w-full object-contain"
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        src={slide.src}
+                      />
+                    )}
                   </div>
                 </div>
               ))}
@@ -117,6 +154,16 @@ export function Carousel({ slides }: CarouselProps) {
           })}
         </div>
       </div>
+
+      {lightboxIndex !== null ? (
+        <ImageLightbox
+          images={slides}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onNext={slides.length > 1 ? showNextImage : undefined}
+          onPrevious={slides.length > 1 ? showPreviousImage : undefined}
+        />
+      ) : null}
     </section>
   )
 }

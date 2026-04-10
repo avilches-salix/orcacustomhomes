@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 
 import { Carousel } from '@/components/Carousel/Carousel'
+import { FloorPlanCard } from '@/components/FloorPlan/FloorPlanCard'
 import type { Home, Media } from '@/payload-types'
 import type { CarouselSlide } from '@/types/types'
 
@@ -215,7 +216,7 @@ export default async function HomeDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {slides.length > 0 ? <Carousel slides={slides} /> : null}
+      {slides.length > 0 ? <Carousel enableLightbox slides={slides} /> : null}
 
       <section className="mx-auto max-w-7xl space-y-16 px-4 py-8 md:px-8 md:py-12">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
@@ -253,28 +254,13 @@ export default async function HomeDetailPage({ params }: PageProps) {
                 }
 
                 return (
-                  <article
-                    className="overflow-hidden rounded-[2rem] border border-black/8 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.05)]"
+                  <FloorPlanCard
+                    alt={plan.image.alt}
+                    description={plan.description}
                     key={plan.id ?? `${plan.title}-${plan.image.url}`}
-                  >
-                    <div className="bg-stone-100 p-6">
-                      <img
-                        alt={plan.image.alt}
-                        className="w-full rounded-2xl"
-                        src={plan.image.url}
-                      />
-                    </div>
-                    <div className="space-y-3 px-6 py-5">
-                      <h3 className="m-0 text-xl font-semibold tracking-tight text-neutral-950">
-                        {plan.title}
-                      </h3>
-                      {plan.description ? (
-                        <p className="m-0 whitespace-pre-line text-sm leading-7 text-neutral-600 md:text-base">
-                          {plan.description}
-                        </p>
-                      ) : null}
-                    </div>
-                  </article>
+                    src={plan.image.url}
+                    title={plan.title}
+                  />
                 )
               })}
             </div>
