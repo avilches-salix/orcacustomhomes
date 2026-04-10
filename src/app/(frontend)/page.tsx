@@ -1,59 +1,44 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
 import React from 'react'
-import { fileURLToPath } from 'url'
 
-import config from '@/payload.config'
+import config from '@payload-config'
+import { getPayload } from 'payload'
+
+import { RenderBlocks } from '@/components/RenderBlocks'
+
 import './styles.css'
 
 export default async function HomePage() {
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
+  const payload = await getPayload({ config })
+  const { docs } = await payload.find({
+    collection: 'pages',
+    limit: 1,
+    where: {
+      pageType: {
+        equals: 'home',
+      },
+    },
+  })
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+  const homePage = docs[0]
 
   return (
-    <div className="home">
-      <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
-          />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
-        </div>
-      </div>
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
-      </div>
-    </div>
+    <main className="min-h-screen bg-stone-50 text-neutral-950">
+      {homePage?.layout?.length ? (
+        <RenderBlocks blocks={homePage.layout} />
+      ) : (
+        <section className="mx-auto flex max-w-4xl flex-col gap-4 px-4 py-20 text-center md:px-8">
+          <span className="text-xs font-medium uppercase tracking-[0.3em] text-neutral-500">
+            Payload CMS
+          </span>
+          <h1 className="m-0 text-4xl font-semibold tracking-tight md:text-6xl">
+            Crea una pagina Home en el admin para empezar.
+          </h1>
+          <p className="m-0 text-base leading-7 text-neutral-600 md:text-lg">
+            Asignale el tipo de pagina `Home` y agrega los bloques `Title and subtitle` y
+            `Carousel` para ver el contenido renderizado aca.
+          </p>
+        </section>
+      )}
+    </main>
   )
 }

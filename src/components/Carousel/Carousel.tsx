@@ -1,24 +1,122 @@
-import useEmblaCarousel from 'embla-carousel-react'
+'use client'
 
-interface ICarousel{
-  slides: string[];
+import useEmblaCarousel from 'embla-carousel-react'
+import { useCallback, useEffect, useState } from 'react'
+
+import type { CarouselSlide } from '@/types/types'
+
+type CarouselProps = {
+  slides: CarouselSlide[]
 }
 
-export function Carousel({slides}: ICarousel) {
-  const [emblaRef] = useEmblaCarousel()
+export function Carousel({ slides }: CarouselProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) {
+      return
+    }
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap())
+    }
+
+    setScrollSnaps(emblaApi.scrollSnapList())
+    onSelect()
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onSelect)
+
+    return () => {
+      emblaApi.off('select', onSelect)
+      emblaApi.off('reInit', onSelect)
+    }
+  }, [emblaApi])
+
+  if (slides.length === 0) {
+    return null
+  }
 
   return (
-    <div className="embla">
-      <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container">
-          <div className="embla__slide">Slide 1</div>
-          <div className="embla__slide">Slide 2</div>
-          <div className="embla__slide">Slide 3</div>
+    <section className="w-full px-4 py-10 md:px-8 md:py-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-neutral-950 shadow-[0_25px_80px_rgba(0,0,0,0.35)]">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {slides.map((slide, index) => (
+                <div className="min-w-0 flex-[0_0_100%]" key={`${slide.src}-${index}`}>
+                  <div className="relative flex h-[420px] w-full items-center justify-center bg-neutral-950 md:h-[640px]">
+                    <img
+                      alt={slide.alt}
+                      className="h-full w-full object-contain"
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      src={slide.src}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 md:px-5">
+            <button
+              aria-label="Slide anterior"
+              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white transition hover:bg-black/55 focus:outline-none focus:ring-2 focus:ring-white/60"
+              onClick={scrollPrev}
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <button
+              aria-label="Siguiente slide"
+              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white transition hover:bg-black/55 focus:outline-none focus:ring-2 focus:ring-white/60"
+              onClick={scrollNext}
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-5 flex items-center justify-center gap-2">
+          {scrollSnaps.map((_, index) => {
+            const isSelected = index === selectedIndex
+
+            return (
+              <button
+                aria-label={`Ir al slide ${index + 1}`}
+                className={`h-2.5 rounded-full transition-all ${isSelected ? 'w-10 bg-neutral-900' : 'w-2.5 bg-neutral-300 hover:bg-neutral-400'}`}
+                key={index}
+                onClick={() => scrollTo(index)}
+                type="button"
+              />
+            )
+          })}
         </div>
       </div>
-
-      <button className="embla__prev">Scroll to prev</button>
-      <button className="embla__next">Scroll to next</button>
-    </div>
+    </section>
   )
 }

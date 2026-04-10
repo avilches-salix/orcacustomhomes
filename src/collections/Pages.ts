@@ -1,4 +1,7 @@
 import { Carousel } from '@/blocks/Carousel/config'
+import { FormSection } from '@/blocks/FormSection/config'
+import { TextAndContent } from '@/blocks/TextAndContent/config'
+import { TitleAndSubtitle } from '@/blocks/TitleAndSubtitle/config'
 import type { CollectionConfig } from 'payload'
 
 export const Pages: CollectionConfig = {
@@ -53,7 +56,7 @@ export const Pages: CollectionConfig = {
       type: 'blocks',
       required: true,
       label: 'Secciones',
-      blocks: [Carousel],
+      blocks: [TitleAndSubtitle, Carousel, FormSection, TextAndContent],
       admin: {
         description: 'Aca vas a agregar las secciones de la pagina.',
       },

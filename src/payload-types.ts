@@ -89,8 +89,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    header: Header;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -178,7 +182,7 @@ export interface Page {
   /**
    * Aca vas a agregar las secciones de la pagina.
    */
-  layout: unknown[];
+  layout: (TitleAndSubtitleBlock | CarouselBlock | FormSectionBlock | TextAndContentBlock)[];
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -190,6 +194,62 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TitleAndSubtitleBlock".
+ */
+export interface TitleAndSubtitleBlock {
+  eyebrow?: string | null;
+  title: string;
+  subtitle: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'titleAndSubtitle';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlock".
+ */
+export interface CarouselBlock {
+  slides?:
+    | {
+        media: number | Media;
+        alt: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'carousel';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormSectionBlock".
+ */
+export interface FormSectionBlock {
+  eyebrow?: string | null;
+  title: string;
+  subtitle: string;
+  formType: 'contact';
+  formPosition: 'left' | 'right';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'formSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextAndContentBlock".
+ */
+export interface TextAndContentBlock {
+  eyebrow?: string | null;
+  title: string;
+  subtitle: string;
+  image: number | Media;
+  imagePosition: 'left' | 'right';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textAndContent';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -317,7 +377,14 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   pageType?: T;
-  layout?: T | {};
+  layout?:
+    | T
+    | {
+        titleAndSubtitle?: T | TitleAndSubtitleBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
+        formSection?: T | FormSectionBlockSelect<T>;
+        textAndContent?: T | TextAndContentBlockSelect<T>;
+      };
   seo?:
     | T
     | {
@@ -331,6 +398,58 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TitleAndSubtitleBlock_select".
+ */
+export interface TitleAndSubtitleBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  subtitle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlock_select".
+ */
+export interface CarouselBlockSelect<T extends boolean = true> {
+  slides?:
+    | T
+    | {
+        media?: T;
+        alt?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormSectionBlock_select".
+ */
+export interface FormSectionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  subtitle?: T;
+  formType?: T;
+  formPosition?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextAndContentBlock_select".
+ */
+export interface TextAndContentBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  subtitle?: T;
+  image?: T;
+  imagePosition?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -371,6 +490,38 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  navItems?:
+    | {
+        label: string;
+        page: number | Page;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        label?: T;
+        page?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

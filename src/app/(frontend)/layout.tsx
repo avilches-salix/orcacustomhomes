@@ -1,4 +1,10 @@
 import React from 'react'
+
+import config from '@payload-config'
+import { getPayload } from 'payload'
+
+import { Navbar } from '@/components/Navbar/Navbar'
+
 import './styles.css'
 
 export const metadata = {
@@ -8,10 +14,13 @@ export const metadata = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
+  const payload = await getPayload({ config })
+  const header = await payload.findGlobal({ slug: 'header' })
 
   return (
     <html lang="en">
       <body>
+        <Navbar header={header} />
         <main>{children}</main>
       </body>
     </html>

@@ -19,6 +19,11 @@ export const Carousel: Block = {
           relationTo: 'media',
           required: true,
         },
+        {
+          name: 'alt',
+          type: 'text',
+          required: true,
+        },
       ],
     },
   ],
