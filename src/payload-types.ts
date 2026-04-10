@@ -295,6 +295,7 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
+  mainFeaturesImage?: (number | null) | Media;
   interestPoints?:
     | {
         text: string;
@@ -574,6 +575,7 @@ export interface HomesSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  mainFeaturesImage?: T;
   interestPoints?:
     | T
     | {

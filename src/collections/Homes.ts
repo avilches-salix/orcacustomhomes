@@ -101,6 +101,12 @@ export const Homes: CollectionConfig = {
       ],
     },
     {
+      name: 'mainFeaturesImage',
+      type: 'upload',
+      label: 'Main features image',
+      relationTo: 'media',
+    },
+    {
       name: 'interestPoints',
       type: 'array',
       label: 'Interest points',

@@ -112,6 +112,48 @@ function ListSection({ items, title }: { items: string[]; title: string }) {
   )
 }
 
+function MainFeaturesSection({ image, items }: { image?: number | Media | null; items: string[] }) {
+  if (items.length === 0) {
+    return null
+  }
+
+  const hasImage = isMediaObject(image) && Boolean(image.url)
+
+  return (
+    <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div className="overflow-hidden rounded-[2rem] border border-black/8 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.05)]">
+        {hasImage ? (
+          <img
+            alt={image.alt}
+            className="h-full max-h-[620px] w-full object-cover"
+            src={image.url!}
+          />
+        ) : (
+          <div className="flex min-h-[320px] items-center justify-center bg-stone-100 px-6 text-center text-neutral-500">
+            Add a main features image in the CMS to display it here.
+          </div>
+        )}
+      </div>
+
+      <div className="space-y-5">
+        <h2 className="m-0 text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
+          Main Features
+        </h2>
+        <ul className="space-y-3 p-0">
+          {items.map((item) => (
+            <li
+              className="list-none rounded-2xl border border-black/8 bg-white px-5 py-4 text-neutral-700 shadow-[0_12px_30px_rgba(0,0,0,0.04)]"
+              key={item}
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const home = await getHome(slug)
@@ -158,12 +200,12 @@ export default async function HomeDetailPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-stone-50 pb-20 text-neutral-950">
       <section className="mx-auto max-w-7xl px-4 pt-20 md:px-8 md:pt-28">
-        <div className="max-w-4xl space-y-5">
+        <div className="max-w-4xl space-y-3">
           <span className="inline-flex rounded-full bg-och-primary px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-white">
             {formatStatus(home.status)}
           </span>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             <h1 className="m-0 text-4xl font-semibold tracking-tight text-balance md:text-7xl md:leading-none">
               {home.title}
             </h1>
@@ -197,7 +239,7 @@ export default async function HomeDetailPage({ params }: PageProps) {
           </section>
         ) : null}
 
-        <ListSection items={mainFeatures} title="Main Features" />
+        <MainFeaturesSection image={home.mainFeaturesImage} items={mainFeatures} />
         <ListSection items={interestPoints} title="Interest Points" />
         <ListSection items={totalFeatures} title="Total Features" />
 
