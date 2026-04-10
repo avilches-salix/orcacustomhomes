@@ -1,5 +1,6 @@
 import { CarouselBlock } from '@/components/Carousel/CarouselBlock'
 import { FormSectionBlock } from '@/components/FormSection/FormSectionBlock'
+import { ServiceAreasBlock } from '@/components/ServiceAreas/ServiceAreasBlock'
 import { TextAndContentBlock } from '@/components/TextAndContent/TextAndContentBlock'
 import { TitleAndSubtitleBlock } from '@/components/TitleAndSubtitle/TitleAndSubtitleBlock'
 import type { Media } from '@/payload-types'
@@ -7,10 +8,12 @@ import type { Media } from '@/payload-types'
 type CarouselLayoutBlock = {
   blockType: 'carousel'
   id?: string | null
-  slides?: {
-    alt?: string | null
-    media?: number | Media | null
-  }[] | null
+  slides?:
+    | {
+        alt?: string | null
+        media?: number | Media | null
+      }[]
+    | null
 }
 
 type TitleAndSubtitleLayoutBlock = {
@@ -41,11 +44,23 @@ type TextAndContentLayoutBlock = {
   title?: string | null
 }
 
+type ServiceAreasLayoutBlock = {
+  blockType: 'serviceAreas'
+  areas?:
+    | {
+        id?: string | null
+        name?: string | null
+      }[]
+    | null
+  id?: string | null
+}
+
 type LayoutBlock =
   | CarouselLayoutBlock
   | TitleAndSubtitleLayoutBlock
   | FormSectionLayoutBlock
   | TextAndContentLayoutBlock
+  | ServiceAreasLayoutBlock
 
 type RenderBlocksProps = {
   blocks?: LayoutBlock[] | null
@@ -111,6 +126,9 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
           />
         )
       }
+
+      case 'serviceAreas':
+        return <ServiceAreasBlock areas={block.areas} key={key} />
 
       default:
         return null

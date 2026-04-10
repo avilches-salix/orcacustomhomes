@@ -91,9 +91,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     header: Header;
+    footer: Footer;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   widgets: {
@@ -182,7 +184,7 @@ export interface Page {
   /**
    * Aca vas a agregar las secciones de la pagina.
    */
-  layout: (TitleAndSubtitleBlock | CarouselBlock | FormSectionBlock | TextAndContentBlock)[];
+  layout: (TitleAndSubtitleBlock | CarouselBlock | FormSectionBlock | TextAndContentBlock | ServiceAreasBlock)[];
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -250,6 +252,21 @@ export interface TextAndContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'textAndContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceAreasBlock".
+ */
+export interface ServiceAreasBlock {
+  areas?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceAreas';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -384,6 +401,7 @@ export interface PagesSelect<T extends boolean = true> {
         carousel?: T | CarouselBlockSelect<T>;
         formSection?: T | FormSectionBlockSelect<T>;
         textAndContent?: T | TextAndContentBlockSelect<T>;
+        serviceAreas?: T | ServiceAreasBlockSelect<T>;
       };
   seo?:
     | T
@@ -453,6 +471,20 @@ export interface TextAndContentBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceAreasBlock_select".
+ */
+export interface ServiceAreasBlockSelect<T extends boolean = true> {
+  areas?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -509,9 +541,41 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  navItems?:
+    | {
+        label: string;
+        page: number | Page;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        label?: T;
+        page?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
   navItems?:
     | T
     | {
