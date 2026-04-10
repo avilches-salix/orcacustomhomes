@@ -195,7 +195,6 @@ export default async function HomeDetailPage({ params }: PageProps) {
   const slides = getSlides(home)
   const mainFeatures = normalizeList(home.mainfeatures)
   const interestPoints = normalizeList(home.interestPoints)
-  const totalFeatures = normalizeList(home.totalFeatures)
 
   return (
     <main className="min-h-screen bg-stone-50 pb-20 text-neutral-950">
@@ -241,7 +240,6 @@ export default async function HomeDetailPage({ params }: PageProps) {
 
         <MainFeaturesSection image={home.mainFeaturesImage} items={mainFeatures} />
         <ListSection items={interestPoints} title="Interest Points" />
-        <ListSection items={totalFeatures} title="Total Features" />
 
         {home.floorPlans?.length ? (
           <section className="space-y-5">

@@ -1,5 +1,6 @@
 import { CarouselBlock } from '@/components/Carousel/CarouselBlock'
 import { FormSectionBlock } from '@/components/FormSection/FormSectionBlock'
+import { HouseListBlock } from '@/components/HouseList/HouseListBlock'
 import { ServiceAreasBlock } from '@/components/ServiceAreas/ServiceAreasBlock'
 import { TextAndContentBlock } from '@/components/TextAndContent/TextAndContentBlock'
 import { TitleAndSubtitleBlock } from '@/components/TitleAndSubtitle/TitleAndSubtitleBlock'
@@ -55,12 +56,18 @@ type ServiceAreasLayoutBlock = {
   id?: string | null
 }
 
+type HouseListLayoutBlock = {
+  blockType: 'houseList'
+  id?: string | null
+}
+
 type LayoutBlock =
   | CarouselLayoutBlock
   | TitleAndSubtitleLayoutBlock
   | FormSectionLayoutBlock
   | TextAndContentLayoutBlock
   | ServiceAreasLayoutBlock
+  | HouseListLayoutBlock
 
 type RenderBlocksProps = {
   blocks?: LayoutBlock[] | null
@@ -129,6 +136,9 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
 
       case 'serviceAreas':
         return <ServiceAreasBlock areas={block.areas} key={key} />
+
+      case 'houseList':
+        return <HouseListBlock key={key} />
 
       default:
         return null

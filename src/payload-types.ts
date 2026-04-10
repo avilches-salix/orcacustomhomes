@@ -186,7 +186,14 @@ export interface Page {
   /**
    * Aca vas a agregar las secciones de la pagina.
    */
-  layout: (TitleAndSubtitleBlock | CarouselBlock | FormSectionBlock | TextAndContentBlock | ServiceAreasBlock)[];
+  layout: (
+    | TitleAndSubtitleBlock
+    | CarouselBlock
+    | FormSectionBlock
+    | TextAndContentBlock
+    | ServiceAreasBlock
+    | HouseListBlock
+  )[];
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -272,6 +279,15 @@ export interface ServiceAreasBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HouseListBlock".
+ */
+export interface HouseListBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'houseList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homes".
  */
 export interface Home {
@@ -303,12 +319,6 @@ export interface Home {
       }[]
     | null;
   description?: string | null;
-  totalFeatures?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
   heroCarousel?:
     | {
         media: number | Media;
@@ -473,6 +483,7 @@ export interface PagesSelect<T extends boolean = true> {
         formSection?: T | FormSectionBlockSelect<T>;
         textAndContent?: T | TextAndContentBlockSelect<T>;
         serviceAreas?: T | ServiceAreasBlockSelect<T>;
+        houseList?: T | HouseListBlockSelect<T>;
       };
   seo?:
     | T
@@ -556,6 +567,14 @@ export interface ServiceAreasBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HouseListBlock_select".
+ */
+export interface HouseListBlockSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homes_select".
  */
 export interface HomesSelect<T extends boolean = true> {
@@ -583,12 +602,6 @@ export interface HomesSelect<T extends boolean = true> {
         id?: T;
       };
   description?: T;
-  totalFeatures?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
   heroCarousel?:
     | T
     | {

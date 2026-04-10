@@ -67,14 +67,6 @@ h1 {
   }
 }
 
-p {
-  margin: 24px 0;
-
-  @media (max-width: 1024px) {
-    margin: calc(var(--base) * 0.75) 0;
-  }
-}
-
 svg {
   vertical-align: middle;
 }
@@ -138,10 +130,6 @@ svg {
     @media (max-width: 1024px) {
       flex-direction: column;
       gap: 6px;
-    }
-
-    p {
-      margin: 0;
     }
 
     .codeLink {

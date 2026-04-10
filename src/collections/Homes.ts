@@ -125,19 +125,6 @@ export const Homes: CollectionConfig = {
       label: 'Description',
     },
     {
-      name: 'totalFeatures',
-      type: 'array',
-      label: 'Total features',
-      fields: [
-        {
-          name: 'text',
-          type: 'text',
-          label: 'Feature',
-          required: true,
-        },
-      ],
-    },
-    {
       name: 'heroCarousel',
       type: 'array',
       label: 'Hero carousel',
