@@ -170,6 +170,16 @@ export const Homes: CollectionConfig = {
       ],
     },
     {
+      name: 'formTitle',
+      type: 'text',
+      label: 'Form title',
+    },
+    {
+      name: 'formSubtitle',
+      type: 'textarea',
+      label: 'Form subtitle',
+    },
+    {
       name: 'seo',
       type: 'group',
       label: 'SEO',

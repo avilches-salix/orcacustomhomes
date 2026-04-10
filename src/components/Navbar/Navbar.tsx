@@ -31,14 +31,14 @@ export function Navbar({ header }: NavbarProps) {
       .filter((item): item is { href: string; label: string } => item !== null) ?? []
 
   return (
-    <div className="pointer-events-none sticky top-4 z-50 flex justify-center px-4 pt-4 md:px-6">
+    <div className="pointer-events-none fixed left-1/2 top-4 z-50 -translate-x-1/2 px-4 md:px-6">
       <nav className="pointer-events-auto flex w-fit items-center gap-2 rounded-full border bg-white/75 px-3 py-2 shadow-[0_20px_60px_rgba(0,0,0,0.08)] backdrop-blur-xl md:gap-3 md:px-4">
         <Link
           aria-label="Go to homepage"
           className="inline-flex items-center rounded-full  px-4 py-2 text-sm font-semibold tracking-[0.28em] text-black transition "
           href="/"
         >
-          <img className='w-10' src="/img/logo.webp" alt="Logo" />
+          <img className="w-10" src="/img/logo.webp" alt="Logo" />
         </Link>
 
         <div className="h-7 w-px bg-black/10" />

@@ -6,6 +6,7 @@ import { getPayload } from 'payload'
 
 import { Carousel } from '@/components/Carousel/Carousel'
 import { FloorPlanCard } from '@/components/FloorPlan/FloorPlanCard'
+import { FormSectionBlock } from '@/components/FormSection/FormSectionBlock'
 import type { Home, Media } from '@/payload-types'
 import type { CarouselSlide } from '@/types/types'
 
@@ -198,7 +199,7 @@ export default async function HomeDetailPage({ params }: PageProps) {
   const interestPoints = normalizeList(home.interestPoints)
 
   return (
-    <main className="min-h-screen bg-stone-50 pb-20 text-neutral-950">
+    <main className="min-h-screen bg-stone-50 text-neutral-950">
       <section className="mx-auto max-w-7xl px-4 pt-20 md:px-8 md:pt-28">
         <div className="max-w-4xl space-y-3">
           <span className="inline-flex rounded-full bg-och-primary px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-white">
@@ -267,6 +268,15 @@ export default async function HomeDetailPage({ params }: PageProps) {
           </section>
         ) : null}
       </section>
+
+      {home.formTitle && home.formSubtitle ? (
+        <FormSectionBlock
+          formPosition="right"
+          formType="contact"
+          subtitle={home.formSubtitle}
+          title={home.formTitle}
+        />
+      ) : null}
     </main>
   )
 }

@@ -334,6 +334,8 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
+  formTitle?: string | null;
+  formSubtitle?: string | null;
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -617,6 +619,8 @@ export interface HomesSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  formTitle?: T;
+  formSubtitle?: T;
   seo?:
     | T
     | {

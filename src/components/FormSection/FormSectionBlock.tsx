@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { ContactForm } from '@/components/forms/ContactForm'
 
@@ -38,7 +38,7 @@ export function FormSectionBlock({
             </span>
           ) : null}
 
-          <div className="max-w-2xl space-y-4">
+          <div className="flex max-w-2xl flex-col gap-2">
             <h2 className="m-0 text-4xl font-semibold tracking-tight text-balance text-white md:text-6xl md:leading-none">
               {title}
             </h2>
