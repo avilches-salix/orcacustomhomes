@@ -1,0 +1,246 @@
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+
+import config from '@payload-config'
+import { getPayload } from 'payload'
+
+import { Carousel } from '@/components/Carousel/Carousel'
+import type { Home, Media } from '@/payload-types'
+import type { CarouselSlide } from '@/types/types'
+
+type PageProps = {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+type TextItem = {
+  id?: string | null
+  text?: string | null
+}
+
+function isMediaObject(media: number | Media | null | undefined): media is Media {
+  return typeof media === 'object' && media !== null
+}
+
+async function getHome(slug: string) {
+  const payload = await getPayload({ config })
+  const { docs } = await payload.find({
+    collection: 'homes',
+    limit: 1,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+
+  return docs[0] ?? null
+}
+
+function normalizeList(items?: TextItem[] | null) {
+  return (
+    items?.map((item) => item.text?.trim()).filter((item): item is string => Boolean(item)) ?? []
+  )
+}
+
+function formatStatus(status: Home['status']) {
+  switch (status) {
+    case 'underConstruction':
+      return 'Under Construction'
+    case 'sold':
+      return 'Sold'
+    case 'available':
+    default:
+      return 'Available'
+  }
+}
+
+function getSlides(home: Home): CarouselSlide[] {
+  return (
+    home.heroCarousel
+      ?.map((item) => {
+        if (!isMediaObject(item.media) || !item.media.url) {
+          return null
+        }
+
+        return {
+          alt: item.alt?.trim() || item.media.alt,
+          src: item.media.url,
+        }
+      })
+      .filter((item): item is CarouselSlide => item !== null) ?? []
+  )
+}
+
+function InfoCard({ label, value }: { label: string; value?: number | string | null }) {
+  if (value === null || value === undefined || value === '') {
+    return null
+  }
+
+  return (
+    <div className="rounded-2xl border border-black/8 bg-white p-5 shadow-[0_12px_30px_rgba(0,0,0,0.04)]">
+      <p className="m-0 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
+        {label}
+      </p>
+      <p className="mt-2 text-2xl font-semibold tracking-tight text-neutral-950">{value}</p>
+    </div>
+  )
+}
+
+function ListSection({ items, title }: { items: string[]; title: string }) {
+  if (items.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="space-y-5">
+      <h2 className="m-0 text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
+        {title}
+      </h2>
+      <ul className="grid gap-3 p-0 md:grid-cols-2">
+        {items.map((item) => (
+          <li
+            className="list-none rounded-2xl border border-black/8 bg-white px-5 py-4 text-neutral-700 shadow-[0_12px_30px_rgba(0,0,0,0.04)]"
+            key={item}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const home = await getHome(slug)
+
+  if (!home) {
+    return {
+      title: 'Home not found',
+    }
+  }
+
+  const seoImage = isMediaObject(home.seo?.ogImage) ? home.seo.ogImage.url : null
+
+  return {
+    title: home.seo?.metaTitle || home.title,
+    description: home.seo?.metaDescription || home.details || undefined,
+    openGraph: {
+      title: home.seo?.ogTitle || home.seo?.metaTitle || home.title,
+      description:
+        home.seo?.ogDescription || home.seo?.metaDescription || home.details || undefined,
+      images: seoImage ? [{ url: seoImage }] : undefined,
+    },
+    robots: home.seo?.noIndex
+      ? {
+          index: false,
+          follow: false,
+        }
+      : undefined,
+  }
+}
+
+export default async function HomeDetailPage({ params }: PageProps) {
+  const { slug } = await params
+  const home = await getHome(slug)
+
+  if (!home) {
+    notFound()
+  }
+
+  const slides = getSlides(home)
+  const mainFeatures = normalizeList(home.mainfeatures)
+  const interestPoints = normalizeList(home.interestPoints)
+  const totalFeatures = normalizeList(home.totalFeatures)
+
+  return (
+    <main className="min-h-screen bg-stone-50 pb-20 text-neutral-950">
+      <section className="mx-auto max-w-7xl px-4 pt-20 md:px-8 md:pt-28">
+        <div className="max-w-4xl space-y-5">
+          <span className="inline-flex rounded-full bg-och-primary px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-white">
+            {formatStatus(home.status)}
+          </span>
+
+          <div className="space-y-3">
+            <h1 className="m-0 text-4xl font-semibold tracking-tight text-balance md:text-7xl md:leading-none">
+              {home.title}
+            </h1>
+            {home.details ? (
+              <p className="m-0 max-w-3xl text-lg leading-8 text-neutral-600">{home.details}</p>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      {slides.length > 0 ? <Carousel slides={slides} /> : null}
+
+      <section className="mx-auto max-w-7xl space-y-16 px-4 py-8 md:px-8 md:py-12">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+          <InfoCard label="Direction" value={home.direction} />
+          <InfoCard label="Neighbour" value={home.neighbour} />
+          <InfoCard label="Bedrooms" value={home.bedrooms} />
+          <InfoCard label="Baths" value={home.baths} />
+          <InfoCard label="Sq" value={home.sq} />
+          <InfoCard label="Total Sq" value={home.totalsq} />
+        </div>
+
+        {home.description ? (
+          <section className="space-y-5">
+            <h2 className="m-0 text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
+              Description
+            </h2>
+            <p className="m-0 max-w-4xl whitespace-pre-line text-base leading-8 text-neutral-700 md:text-lg">
+              {home.description}
+            </p>
+          </section>
+        ) : null}
+
+        <ListSection items={mainFeatures} title="Main Features" />
+        <ListSection items={interestPoints} title="Interest Points" />
+        <ListSection items={totalFeatures} title="Total Features" />
+
+        {home.floorPlans?.length ? (
+          <section className="space-y-5">
+            <h2 className="m-0 text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
+              Floor Plans
+            </h2>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {home.floorPlans.map((plan) => {
+                if (!isMediaObject(plan.image) || !plan.image.url) {
+                  return null
+                }
+
+                return (
+                  <article
+                    className="overflow-hidden rounded-[2rem] border border-black/8 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.05)]"
+                    key={plan.id ?? `${plan.title}-${plan.image.url}`}
+                  >
+                    <div className="bg-stone-100 p-6">
+                      <img
+                        alt={plan.image.alt}
+                        className="w-full rounded-2xl"
+                        src={plan.image.url}
+                      />
+                    </div>
+                    <div className="space-y-3 px-6 py-5">
+                      <h3 className="m-0 text-xl font-semibold tracking-tight text-neutral-950">
+                        {plan.title}
+                      </h3>
+                      {plan.description ? (
+                        <p className="m-0 whitespace-pre-line text-sm leading-7 text-neutral-600 md:text-base">
+                          {plan.description}
+                        </p>
+                      ) : null}
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          </section>
+        ) : null}
+      </section>
+    </main>
+  )
+}

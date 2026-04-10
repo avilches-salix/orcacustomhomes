@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
+    homes: Home;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    homes: HomesSelect<false> | HomesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -270,6 +272,70 @@ export interface ServiceAreasBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homes".
+ */
+export interface Home {
+  id: number;
+  title: string;
+  /**
+   * URL de la casa dentro de /our-homes. Ejemplo: modern-lake-house.
+   */
+  slug: string;
+  status: 'available' | 'sold' | 'underConstruction';
+  details?: string | null;
+  direction?: string | null;
+  neighbour?: string | null;
+  bedrooms?: number | null;
+  baths?: number | null;
+  sq?: number | null;
+  totalsq?: number | null;
+  mainfeatures?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  interestPoints?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  description?: string | null;
+  totalFeatures?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  heroCarousel?:
+    | {
+        media: number | Media;
+        alt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  floorPlans?:
+    | {
+        title: string;
+        image: number | Media;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    ogTitle?: string | null;
+    ogDescription?: string | null;
+    ogImage?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -303,6 +369,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'homes';
+        value: number | Home;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -482,6 +552,68 @@ export interface ServiceAreasBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homes_select".
+ */
+export interface HomesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  status?: T;
+  details?: T;
+  direction?: T;
+  neighbour?: T;
+  bedrooms?: T;
+  baths?: T;
+  sq?: T;
+  totalsq?: T;
+  mainfeatures?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  interestPoints?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  description?: T;
+  totalFeatures?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  heroCarousel?:
+    | T
+    | {
+        media?: T;
+        alt?: T;
+        id?: T;
+      };
+  floorPlans?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
