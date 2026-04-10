@@ -187,6 +187,7 @@ export interface Page {
    * Aca vas a agregar las secciones de la pagina.
    */
   layout: (
+    | HeroBlock
     | TitleAndSubtitleBlock
     | CarouselBlock
     | FormSectionBlock
@@ -205,6 +206,20 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  title: string;
+  subtitle: string;
+  backgroundType: 'image' | 'video';
+  backgroundImage?: (number | null) | Media;
+  backgroundVideo?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -480,6 +495,7 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        hero?: T | HeroBlockSelect<T>;
         titleAndSubtitle?: T | TitleAndSubtitleBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
         formSection?: T | FormSectionBlockSelect<T>;
@@ -500,6 +516,19 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  backgroundType?: T;
+  backgroundImage?: T;
+  backgroundVideo?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

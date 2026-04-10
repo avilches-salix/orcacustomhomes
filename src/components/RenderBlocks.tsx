@@ -1,10 +1,21 @@
 import { CarouselBlock } from '@/components/Carousel/CarouselBlock'
 import { FormSectionBlock } from '@/components/FormSection/FormSectionBlock'
+import { HeroBlock } from '@/components/Hero/HeroBlock'
 import { HouseListBlock } from '@/components/HouseList/HouseListBlock'
 import { ServiceAreasBlock } from '@/components/ServiceAreas/ServiceAreasBlock'
 import { TextAndContentBlock } from '@/components/TextAndContent/TextAndContentBlock'
 import { TitleAndSubtitleBlock } from '@/components/TitleAndSubtitle/TitleAndSubtitleBlock'
 import type { Media } from '@/payload-types'
+
+type HeroLayoutBlock = {
+  backgroundImage?: number | Media | null
+  backgroundType?: 'image' | 'video' | null
+  backgroundVideo?: number | Media | null
+  blockType: 'hero'
+  id?: string | null
+  subtitle?: string | null
+  title?: string | null
+}
 
 type CarouselLayoutBlock = {
   blockType: 'carousel'
@@ -62,6 +73,7 @@ type HouseListLayoutBlock = {
 }
 
 type LayoutBlock =
+  | HeroLayoutBlock
   | CarouselLayoutBlock
   | TitleAndSubtitleLayoutBlock
   | FormSectionLayoutBlock
@@ -82,6 +94,23 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
     const key = block.id ?? `${block.blockType}-${index}`
 
     switch (block.blockType) {
+      case 'hero': {
+        if (!block.title || !block.subtitle) {
+          return null
+        }
+
+        return (
+          <HeroBlock
+            backgroundImage={block.backgroundImage}
+            backgroundType={block.backgroundType}
+            backgroundVideo={block.backgroundVideo}
+            key={key}
+            subtitle={block.subtitle}
+            title={block.title}
+          />
+        )
+      }
+
       case 'titleAndSubtitle': {
         if (!block.title || !block.subtitle) {
           return null
