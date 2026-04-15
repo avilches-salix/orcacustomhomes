@@ -44,21 +44,24 @@ export function KpiCardsBlock({ eyebrow, title, subtitle, items }: KpiCardsBlock
 
             return (
               <div
-                className="flex w-full flex-col items-center gap-4 rounded-[2rem] border border-black/10 bg-och-primary p-8 md:w-[calc(50%-12px)] xl:w-[calc(25%-16px)]"
+                className="group relative flex w-full flex-col items-center gap-6 rounded-[2rem] bg-och-primary p-10 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl md:w-[calc(50%-12px)] xl:w-[calc(25%-16px)]"
                 key={item.number + index}
               >
                 {iconUrl ? (
-                  <img
-                    alt={mediaObj.alt || ''}
-                    className="h-12 w-12 object-contain"
-                    src={iconUrl}
-                  />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 transition-colors group-hover:bg-white/20">
+                    <img
+                      alt={mediaObj.alt || ''}
+                      className="h-10 w-10 object-contain"
+                      src={iconUrl}
+                    />
+                  </div>
                 ) : null}
+
                 <div className="text-center">
-                  <p className="m-0 text-4xl font-semibold tracking-tight text-white">
-                    {item.number}
+                  <p className="m-0 text-5xl font-bold tracking-tight text-white">{item.number}</p>
+                  <p className="m-0 mt-1 text-sm font-medium uppercase tracking-widest text-white/70">
+                    {item.label}
                   </p>
-                  <p className="m-0 text-base text-neutral-400">{item.label}</p>
                 </div>
               </div>
             )

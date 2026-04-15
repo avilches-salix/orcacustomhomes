@@ -2,14 +2,6 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import type { Media } from '@/payload-types'
 
-type BlogContentBlock = {
-  blockType: 'textBlock' | 'imageBlock'
-  id?: string
-  text?: string | null
-  image?: number | Media | null
-  caption?: string | null
-}
-
 type PageProps = {
   params: Promise<{
     slug: string
@@ -65,23 +57,36 @@ export default async function BlogPostPage({ params }: PageProps) {
   const featuredImageAlt = featuredMedia?.alt || blog.title
 
   return (
-    <main className="min-h-screen bg-och-primary text-white">
-      {featuredImageUrl ? (
-        <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
-          <img
-            alt={featuredImageAlt}
-            className="h-full w-full object-cover"
-            src={featuredImageUrl}
-          />
-          <div className="absolute inset-0 bg-black/30" />
+    <main className="min-h-screen bg-stone-50 text-neutral-950">
+      <section className="relative flex min-h-[60vh] items-end overflow-hidden">
+        <div className="absolute inset-0">
+          {featuredImageUrl ? (
+            <img
+              alt={featuredImageAlt}
+              className="h-full w-full object-cover"
+              src={featuredImageUrl}
+            />
+          ) : (
+            <div className="h-full w-full bg-neutral-200" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
         </div>
-      ) : null}
 
-      <article className="mx-auto max-w-3xl px-4 py-20 md:px-8">
-        <header className="mb-10">
-          <h1 className="m-0 text-4xl font-semibold tracking-tight md:text-5xl">{blog.title}</h1>
-        </header>
+        <div className="relative z-10 w-full px-4 pb-16 md:px-8 md:pb-20">
+          <div className="mx-auto max-w-7xl">
+            <h1 className="m-0 max-w-4xl text-5xl font-semibold tracking-tight text-white md:text-7xl md:leading-none">
+              {blog.title}
+            </h1>
+            {blog.extract ? (
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-white/80 md:text-xl">
+                {blog.extract}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </section>
 
+      <article className="mx-auto max-w-3xl px-4 py-12 md:px-8 md:py-20">
         {blog.content && blog.content.length > 0 ? (
           <div className="space-y-8">
             {blog.content.map((block, index) => {
@@ -89,7 +94,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
               if (block.blockType === 'textBlock' && block.text) {
                 return (
-                  <div key={key} className="text-lg text-neutral-300">
+                  <div key={key} className="text-lg text-neutral-700">
                     {block.text.split('\n').map((line, i) => {
                       if (line.trim() === '') {
                         return <br key={i} />
