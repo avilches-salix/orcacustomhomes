@@ -1,7 +1,7 @@
 import { CarouselBlock } from '@/components/Carousel/CarouselBlock'
 import { FormSectionBlock } from '@/components/FormSection/FormSectionBlock'
 import { HeroBlock } from '@/components/Hero/HeroBlock'
-import { HouseListBlock } from '@/components/HouseList/HouseListBlock'
+import { HouseGridBlock } from '@/components/HouseGrid/HouseGridBlock'
 import { ServiceAreasBlock } from '@/components/ServiceAreas/ServiceAreasBlock'
 import { TextAndContentBlock } from '@/components/TextAndContent/TextAndContentBlock'
 import { TitleAndSubtitleBlock } from '@/components/TitleAndSubtitle/TitleAndSubtitleBlock'
@@ -67,9 +67,12 @@ type ServiceAreasLayoutBlock = {
   id?: string | null
 }
 
-type HouseListLayoutBlock = {
-  blockType: 'houseList'
+type HouseGridLayoutBlock = {
+  blockType: 'houseGrid'
   id?: string | null
+  status?: 'sold' | 'underConstruction' | 'available' | null
+  subtitle?: string | null
+  title?: string | null
 }
 
 type LayoutBlock =
@@ -79,7 +82,7 @@ type LayoutBlock =
   | FormSectionLayoutBlock
   | TextAndContentLayoutBlock
   | ServiceAreasLayoutBlock
-  | HouseListLayoutBlock
+  | HouseGridLayoutBlock
 
 type RenderBlocksProps = {
   blocks?: LayoutBlock[] | null
@@ -166,8 +169,15 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
       case 'serviceAreas':
         return <ServiceAreasBlock areas={block.areas} key={key} />
 
-      case 'houseList':
-        return <HouseListBlock key={key} />
+      case 'houseGrid':
+        return (
+          <HouseGridBlock
+            key={key}
+            status={block.status ?? 'available'}
+            subtitle={block.subtitle}
+            title={block.title ?? ''}
+          />
+        )
 
       default:
         return null

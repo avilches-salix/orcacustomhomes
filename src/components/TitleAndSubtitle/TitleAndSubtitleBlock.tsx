@@ -10,7 +10,7 @@ export function TitleAndSubtitleBlock({
   title,
 }: TitleAndSubtitleBlockProps) {
   return (
-    <section className="mx-auto flex max-w-7xl flex-col gap-6 px-4 pt-8 md:px-8 md:pt-20">
+    <section className="mx-auto flex max-w-7xl flex-col gap-6 pt-8 md:pt-20">
       {eyebrow ? (
         <span className="text-xs font-medium uppercase tracking-[0.3em] text-neutral-500">
           {eyebrow}

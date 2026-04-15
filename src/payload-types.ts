@@ -193,7 +193,7 @@ export interface Page {
     | FormSectionBlock
     | TextAndContentBlock
     | ServiceAreasBlock
-    | HouseListBlock
+    | HouseGridBlock
   )[];
   seo?: {
     metaTitle?: string | null;
@@ -294,12 +294,15 @@ export interface ServiceAreasBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HouseListBlock".
+ * via the `definition` "HouseGridBlock".
  */
-export interface HouseListBlock {
+export interface HouseGridBlock {
+  status: 'sold' | 'underConstruction' | 'available';
+  title: string;
+  subtitle?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'houseList';
+  blockType: 'houseGrid';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -501,7 +504,7 @@ export interface PagesSelect<T extends boolean = true> {
         formSection?: T | FormSectionBlockSelect<T>;
         textAndContent?: T | TextAndContentBlockSelect<T>;
         serviceAreas?: T | ServiceAreasBlockSelect<T>;
-        houseList?: T | HouseListBlockSelect<T>;
+        houseGrid?: T | HouseGridBlockSelect<T>;
       };
   seo?:
     | T
@@ -598,9 +601,12 @@ export interface ServiceAreasBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HouseListBlock_select".
+ * via the `definition` "HouseGridBlock_select".
  */
-export interface HouseListBlockSelect<T extends boolean = true> {
+export interface HouseGridBlockSelect<T extends boolean = true> {
+  status?: T;
+  title?: T;
+  subtitle?: T;
   id?: T;
   blockName?: T;
 }
