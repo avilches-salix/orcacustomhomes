@@ -5,6 +5,8 @@ import { HouseGrid } from '@/blocks/HouseGrid/config'
 import { ServiceAreas } from '@/blocks/ServiceAreas/config'
 import { TextAndContent } from '@/blocks/TextAndContent/config'
 import { TitleAndSubtitle } from '@/blocks/TitleAndSubtitle/config'
+import { BlogPostsGrid } from '@/blocks/BlogPostsGrid/config'
+import { KpiCards } from '@/blocks/KpiCards/config'
 import type { CollectionConfig } from 'payload'
 
 export const Pages: CollectionConfig = {
@@ -67,6 +69,8 @@ export const Pages: CollectionConfig = {
         TextAndContent,
         ServiceAreas,
         HouseGrid,
+        BlogPostsGrid,
+        KpiCards,
       ],
       admin: {
         description: 'Aca vas a agregar las secciones de la pagina.',

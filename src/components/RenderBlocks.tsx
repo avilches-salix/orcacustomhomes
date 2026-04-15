@@ -5,6 +5,8 @@ import { HouseGridBlock } from '@/components/HouseGrid/HouseGridBlock'
 import { ServiceAreasBlock } from '@/components/ServiceAreas/ServiceAreasBlock'
 import { TextAndContentBlock } from '@/components/TextAndContent/TextAndContentBlock'
 import { TitleAndSubtitleBlock } from '@/components/TitleAndSubtitle/TitleAndSubtitleBlock'
+import { BlogPostsGridBlock } from '@/components/BlogPostsGrid/BlogPostsGridBlock'
+import { KpiCardsBlock } from '@/components/KpiCards/KpiCardsBlock'
 import type { Media } from '@/payload-types'
 
 type HeroLayoutBlock = {
@@ -75,6 +77,29 @@ type HouseGridLayoutBlock = {
   title?: string | null
 }
 
+type BlogPostsGridLayoutBlock = {
+  blockType: 'blogPostsGrid'
+  id?: string | null
+  limit?: number | null
+  subtitle?: string | null
+  title?: string | null
+}
+
+type KpiCardsLayoutBlock = {
+  blockType: 'kpiCards'
+  eyebrow?: string | null
+  id?: string | null
+  items?:
+    | {
+        icon?: number | Media | null
+        label?: string | null
+        number?: string | null
+      }[]
+    | null
+  subtitle?: string | null
+  title?: string | null
+}
+
 type LayoutBlock =
   | HeroLayoutBlock
   | CarouselLayoutBlock
@@ -83,6 +108,8 @@ type LayoutBlock =
   | TextAndContentLayoutBlock
   | ServiceAreasLayoutBlock
   | HouseGridLayoutBlock
+  | BlogPostsGridLayoutBlock
+  | KpiCardsLayoutBlock
 
 type RenderBlocksProps = {
   blocks?: LayoutBlock[] | null
@@ -174,6 +201,26 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
           <HouseGridBlock
             key={key}
             status={block.status ?? 'available'}
+            subtitle={block.subtitle}
+            title={block.title ?? ''}
+          />
+        )
+
+      case 'blogPostsGrid':
+        return (
+          <BlogPostsGridBlock
+            key={key}
+            limit={block.limit}
+            subtitle={block.subtitle}
+            title={block.title ?? ''}
+          />
+        )
+
+      case 'kpiCards':
+        return (
+          <KpiCardsBlock
+            eyebrow={block.eyebrow}
+            items={block.items ?? []}
             subtitle={block.subtitle}
             title={block.title ?? ''}
           />

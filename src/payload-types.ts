@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     homes: Home;
+    blogs: Blog;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     homes: HomesSelect<false> | HomesSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -194,6 +196,8 @@ export interface Page {
     | TextAndContentBlock
     | ServiceAreasBlock
     | HouseGridBlock
+    | BlogPostsGridBlock
+    | KpiCards
   )[];
   seo?: {
     metaTitle?: string | null;
@@ -306,6 +310,41 @@ export interface HouseGridBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogPostsGridBlock".
+ */
+export interface BlogPostsGridBlock {
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Cantidad maxima de blogs a mostrar. Dejar vacio para mostrar todos.
+   */
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogPostsGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KpiCards".
+ */
+export interface KpiCards {
+  eyebrow?: string | null;
+  title: string;
+  subtitle?: string | null;
+  items?:
+    | {
+        icon: number | Media;
+        number: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kpiCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homes".
  */
 export interface Home {
@@ -367,6 +406,44 @@ export interface Home {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs".
+ */
+export interface Blog {
+  id: number;
+  title: string;
+  /**
+   * URL del blog. Ejemplo: mi-primer-blog
+   */
+  slug: string;
+  featuredImage?: (number | null) | Media;
+  /**
+   * Texto corto que aparece en la grilla de blogs.
+   */
+  extract?: string | null;
+  /**
+   * Agrega bloques de texto o imagen y ordenalos arrastrando.
+   */
+  content: (
+    | {
+        text: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'textBlock';
+      }
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'imageBlock';
+      }
+  )[];
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -404,6 +481,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'homes';
         value: number | Home;
+      } | null)
+    | ({
+        relationTo: 'blogs';
+        value: number | Blog;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -505,6 +586,8 @@ export interface PagesSelect<T extends boolean = true> {
         textAndContent?: T | TextAndContentBlockSelect<T>;
         serviceAreas?: T | ServiceAreasBlockSelect<T>;
         houseGrid?: T | HouseGridBlockSelect<T>;
+        blogPostsGrid?: T | BlogPostsGridBlockSelect<T>;
+        kpiCards?: T | KpiCardsSelect<T>;
       };
   seo?:
     | T
@@ -612,6 +695,36 @@ export interface HouseGridBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogPostsGridBlock_select".
+ */
+export interface BlogPostsGridBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KpiCards_select".
+ */
+export interface KpiCardsSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        number?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homes_select".
  */
 export interface HomesSelect<T extends boolean = true> {
@@ -668,6 +781,38 @@ export interface HomesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs_select".
+ */
+export interface BlogsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  featuredImage?: T;
+  extract?: T;
+  content?:
+    | T
+    | {
+        textBlock?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
