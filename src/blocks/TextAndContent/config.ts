@@ -21,8 +21,8 @@ export const TextAndContent: Block = {
     },
     {
       name: 'subtitle',
-      type: 'textarea',
-      label: 'Subtitle',
+      type: 'richText',
+      label: 'Content',
       required: true,
     },
     {

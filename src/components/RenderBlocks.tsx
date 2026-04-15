@@ -8,6 +8,7 @@ import { TitleAndSubtitleBlock } from '@/components/TitleAndSubtitle/TitleAndSub
 import { BlogPostsGridBlock } from '@/components/BlogPostsGrid/BlogPostsGridBlock'
 import { KpiCardsBlock } from '@/components/KpiCards/KpiCardsBlock'
 import type { Media } from '@/payload-types'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 type HeroLayoutBlock = {
   backgroundImage?: number | Media | null
@@ -54,7 +55,7 @@ type TextAndContentLayoutBlock = {
   id?: string | null
   image?: number | Media | null
   imagePosition?: 'left' | 'right' | null
-  subtitle?: string | null
+  subtitle?: SerializedEditorState | string | null
   title?: string | null
 }
 

@@ -1,15 +1,21 @@
 import type { Media } from '@/payload-types'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 type TextAndContentBlockProps = {
   eyebrow?: string | null
   image?: number | Media | null
   imagePosition?: 'left' | 'right' | null
-  subtitle: string
+  subtitle?: SerializedEditorState | string | null
   title: string
 }
 
 function isMediaObject(image: TextAndContentBlockProps['image']): image is Media {
   return typeof image === 'object' && image !== null
+}
+
+function isRichText(value: unknown): value is SerializedEditorState {
+  return typeof value === 'object' && value !== null && 'root' in (value as object)
 }
 
 export function TextAndContentBlock({
@@ -41,7 +47,11 @@ export function TextAndContentBlock({
               {title}
             </h2>
 
-            <p className="m-0 text-base leading-7 text-neutral-600 md:text-lg">{subtitle}</p>
+            {subtitle ? (
+              <div className="prose prose-base max-w-none text-neutral-600">
+                {isRichText(subtitle) ? <RichText data={subtitle} /> : <p>{subtitle}</p>}
+              </div>
+            ) : null}
           </div>
         </div>
 
