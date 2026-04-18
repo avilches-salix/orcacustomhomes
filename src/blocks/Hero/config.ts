@@ -18,7 +18,23 @@ export const Hero: Block = {
       name: 'subtitle',
       type: 'textarea',
       label: 'Subtitle',
+    },
+    {
+      name: 'contentAlignment',
+      type: 'select',
+      label: 'Content alignment',
       required: true,
+      defaultValue: 'center',
+      options: [
+        {
+          label: 'Center',
+          value: 'center',
+        },
+        {
+          label: 'Left',
+          value: 'left',
+        },
+      ],
     },
     {
       name: 'backgroundType',

@@ -217,7 +217,8 @@ export interface Page {
  */
 export interface HeroBlock {
   title: string;
-  subtitle: string;
+  subtitle?: string | null;
+  contentAlignment: 'center' | 'left';
   backgroundType: 'image' | 'video';
   backgroundImage?: (number | null) | Media;
   backgroundVideo?: (number | null) | Media;
@@ -624,6 +625,7 @@ export interface PagesSelect<T extends boolean = true> {
 export interface HeroBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
+  contentAlignment?: T;
   backgroundType?: T;
   backgroundImage?: T;
   backgroundVideo?: T;

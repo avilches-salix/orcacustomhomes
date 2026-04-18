@@ -12,6 +12,7 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 
 type HeroLayoutBlock = {
   backgroundImage?: number | Media | null
+  contentAlignment?: 'center' | 'left' | null
   backgroundType?: 'image' | 'video' | null
   backgroundVideo?: number | Media | null
   blockType: 'hero'
@@ -126,13 +127,14 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
 
     switch (block.blockType) {
       case 'hero': {
-        if (!block.title || !block.subtitle) {
+        if (!block.title) {
           return null
         }
 
         return (
           <HeroBlock
             backgroundImage={block.backgroundImage}
+            contentAlignment={block.contentAlignment}
             backgroundType={block.backgroundType}
             backgroundVideo={block.backgroundVideo}
             key={key}
