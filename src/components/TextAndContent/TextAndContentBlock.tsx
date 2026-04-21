@@ -43,7 +43,7 @@ export function TextAndContentBlock({
           ) : null}
 
           <div className="max-w-2xl space-y-4">
-            <h2 className="m-0 text-2xl font-semibold tracking-tight text-balance text-neutral-950 md:text-3xl md:leading-none">
+            <h2 className="m-0 text-2xl font-semibold tracking-tight text-balance text-neutral-950 md:text-3xl md:leading-none pb-4">
               {title}
             </h2>
 
