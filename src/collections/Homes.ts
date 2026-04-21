@@ -61,7 +61,7 @@ export const Homes: CollectionConfig = {
     {
       name: 'neighbour',
       type: 'text',
-      label: 'Neighbour',
+      label: 'Neighborhood',
     },
     {
       name: 'bedrooms',
@@ -84,7 +84,7 @@ export const Homes: CollectionConfig = {
     {
       name: 'totalsq',
       type: 'number',
-      label: 'Total sq',
+      label: 'Lot Size',
       min: 0,
     },
     {

@@ -222,11 +222,11 @@ export default async function HomeDetailPage({ params }: PageProps) {
       <section className="mx-auto max-w-7xl space-y-16 px-4 py-8 md:px-8 md:py-12">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
           <InfoCard label="Direction" value={home.direction} />
-          <InfoCard label="Neighbour" value={home.neighbour} />
+          <InfoCard label="Neighborhood" value={home.neighbour} />
           <InfoCard label="Bedrooms" value={home.bedrooms} />
           <InfoCard label="Baths" value={home.baths} />
           <InfoCard label="Sq" value={home.sq} />
-          <InfoCard label="Total Sq" value={home.totalsq} />
+          <InfoCard label="Lot Size" value={home.totalsq} />
         </div>
 
         {home.description ? (
