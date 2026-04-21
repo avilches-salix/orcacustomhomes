@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import config from '@payload-config'
 import { getPayload } from 'payload'
 
@@ -9,9 +10,9 @@ type PageProps = {
   }>
 }
 
-export default async function ContentPage({ params }: PageProps) {
-  const { slug } = await params
+async function getPage(slug: string) {
   const payload = await getPayload({ config })
+
   const { docs } = await payload.find({
     collection: 'pages',
     limit: 1,
@@ -31,7 +32,26 @@ export default async function ContentPage({ params }: PageProps) {
     },
   })
 
-  const page = docs[0]
+  return docs[0] ?? null
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const page = await getPage(slug)
+
+  if (!page) {
+    return {}
+  }
+
+  return {
+    title: page.seo?.metaTitle || page.title,
+    description: page.seo?.metaDescription || undefined,
+  }
+}
+
+export default async function ContentPage({ params }: PageProps) {
+  const { slug } = await params
+  const page = await getPage(slug)
 
   if (!page) {
     return (

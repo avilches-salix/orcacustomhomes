@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import React from 'react'
 
 import config from '@payload-config'
@@ -9,8 +10,9 @@ import './styles.css'
 
 export const dynamic = 'force-dynamic'
 
-export default async function HomePage() {
+async function getHomePage() {
   const payload = await getPayload({ config })
+
   const { docs } = await payload.find({
     collection: 'pages',
     limit: 1,
@@ -21,7 +23,24 @@ export default async function HomePage() {
     },
   })
 
-  const homePage = docs[0]
+  return docs[0] ?? null
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const homePage = await getHomePage()
+
+  if (!homePage) {
+    return {}
+  }
+
+  return {
+    title: homePage.seo?.metaTitle || homePage.title,
+    description: homePage.seo?.metaDescription || undefined,
+  }
+}
+
+export default async function HomePage() {
+  const homePage = await getHomePage()
 
   return (
     <main className="min-h-screen bg-stone-50 text-neutral-950">

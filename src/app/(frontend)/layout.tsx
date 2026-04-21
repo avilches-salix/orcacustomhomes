@@ -9,8 +9,8 @@ import { Navbar } from '@/components/Navbar/Navbar'
 import './styles.css'
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'At Orca Custom Homes, we develop and build high-quality homes throughout Bellevue and the Eastside.',
+  title: 'Orca Custom Homes',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
