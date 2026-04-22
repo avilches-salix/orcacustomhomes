@@ -56,7 +56,7 @@ export const Users: CollectionConfig = {
 export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
-    staticDir: 'media',
+    staticDir: '/public/media',
     mimeTypes: ['image/*'],
     imageSizes: [
       {
