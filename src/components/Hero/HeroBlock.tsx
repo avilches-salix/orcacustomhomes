@@ -38,7 +38,7 @@ export function HeroBlock({
   const isLeftAligned = contentAlignment === 'left'
 
   return (
-    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden px-4 py-20 text-white md:px-8">
+    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden py-20 text-white">
       <div className="absolute inset-0">
         {backgroundType === 'video' && videoMedia ? (
           <video
@@ -60,7 +60,7 @@ export function HeroBlock({
       </div>
 
       <div
-        className={`relative z-10 mx-auto flex w-full flex-col gap-4 ${
+        className={`relative z-10 mx-auto flex w-full flex-col gap-4 px-4 md:px-8 ${
           isLeftAligned ? 'max-w-7xl items-start text-left' : 'max-w-4xl items-center text-center'
         }`}
       >
