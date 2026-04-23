@@ -38,12 +38,6 @@ body {
   }
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
 h1 {
   font-size: 64px;
   line-height: 70px;

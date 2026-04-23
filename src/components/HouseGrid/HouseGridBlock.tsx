@@ -77,11 +77,11 @@ export async function HouseGridBlock({ status, title, subtitle }: HouseGridProps
                 href={`/our-homes/${home.slug}`}
                 key={home.id}
               >
-                <div className="aspect-[4/3] w-full overflow-hidden bg-stone-100">
+                <div className="aspect w-full overflow-hidden bg-stone-100">
                   {image ? (
                     <img
                       alt={image.alt}
-                      className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                      className="h-[335px] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
                       src={image.src}
                     />
                   ) : (
