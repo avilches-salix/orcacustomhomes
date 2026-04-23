@@ -2,9 +2,9 @@ import type { Media } from '@/payload-types'
 
 type HeroBlockProps = {
   backgroundImage?: number | Media | null
-  contentAlignment?: 'center' | 'left' | null
   backgroundType?: 'image' | 'video' | null
   backgroundVideo?: number | Media | null
+  contentAlignment?: 'center' | 'left' | null
   subtitle?: string | null
   title: string
 }
@@ -15,17 +15,19 @@ function isMediaObject(media: number | Media | null | undefined): media is Media
 
 export function HeroBlock({
   backgroundImage,
-  contentAlignment = 'center',
   backgroundType = 'image',
   backgroundVideo,
+  contentAlignment = 'center',
   subtitle,
   title,
 }: HeroBlockProps) {
   if (!title) {
     return null
   }
+
   const imageMedia = isMediaObject(backgroundImage) && backgroundImage.url ? backgroundImage : null
   const videoMedia = isMediaObject(backgroundVideo) && backgroundVideo.url ? backgroundVideo : null
+  const isLeftAligned = contentAlignment === 'left'
 
   if (backgroundType === 'image' && !imageMedia) {
     return null
@@ -35,10 +37,8 @@ export function HeroBlock({
     return null
   }
 
-  const isLeftAligned = contentAlignment === 'left'
-
   return (
-    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden py-20 text-white">
+    <section className="relative isolate flex min-h-[80vh] items-center overflow-hidden py-20 text-white md:min-h-[90vh]">
       <div className="absolute inset-0">
         {backgroundType === 'video' && videoMedia ? (
           <video
@@ -50,10 +50,13 @@ export function HeroBlock({
             src={videoMedia.url ?? undefined}
           />
         ) : imageMedia ? (
-          <img
-            alt={imageMedia.alt}
-            className="h-full w-full object-cover"
-            src={imageMedia.url ?? undefined}
+          <div
+            aria-hidden="true"
+            className="h-full w-full bg-cover bg-no-repeat"
+            style={{
+              backgroundImage: `url(${imageMedia.url})`,
+              backgroundPosition: isLeftAligned ? 'center 35%' : 'center center',
+            }}
           />
         ) : null}
         <div className="absolute inset-0 bg-black/45" />
