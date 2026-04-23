@@ -71,17 +71,17 @@ export function Carousel({ enableLightbox = false, slides }: CarouselProps) {
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {slides.map((slide, index) => (
-                <div className="min-w-0 flex-[0_0_100%]" key={`${slide.src}-${index}`}>
-                  <div className="relative flex h-[420px] w-full items-center justify-center bg-neutral-950 md:h-[640px]">
+                <div className="flex-[0_0_100%]" key={`${slide.src}-${index}`}>
+                  <div className="relative flex h-full w-full items-stretch overflow-hidden bg-neutral-950">
                     {enableLightbox ? (
                       <button
-                        className="h-full w-full cursor-zoom-in"
+                        className="block h-full w-full cursor-zoom-in"
                         onClick={() => setLightboxIndex(index)}
                         type="button"
                       >
                         <img
                           alt={slide.alt}
-                          className="h-full w-full object-contain transition-transform duration-200 ease-out hover:scale-[1.01]"
+                          className="block h-full w-full object-cover transition-transform duration-200 ease-out hover:scale-[1.01]"
                           loading={index === 0 ? 'eager' : 'lazy'}
                           src={slide.src}
                         />
@@ -89,7 +89,7 @@ export function Carousel({ enableLightbox = false, slides }: CarouselProps) {
                     ) : (
                       <img
                         alt={slide.alt}
-                        className="h-full w-full object-contain"
+                        className="block h-full w-full object-cover"
                         loading={index === 0 ? 'eager' : 'lazy'}
                         src={slide.src}
                       />
