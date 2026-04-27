@@ -232,6 +232,7 @@ export interface HeroBlock {
  */
 export interface TitleAndSubtitleBlock {
   eyebrow?: string | null;
+  variant: 'default' | 'hero';
   title: string;
   subtitle: string;
   id?: string | null;
@@ -638,6 +639,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
  */
 export interface TitleAndSubtitleBlockSelect<T extends boolean = true> {
   eyebrow?: T;
+  variant?: T;
   title?: T;
   subtitle?: T;
   id?: T;

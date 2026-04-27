@@ -33,7 +33,7 @@ export function TextAndContentBlock({
   const imageOrder = imagePosition === 'left' ? 'md:order-1' : 'md:order-2'
 
   return (
-    <section className="px-4 py-12 md:px-8 md:py-20">
+    <section className="px-4 md:px-8 md:py-20">
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-2 md:items-center md:gap-16">
         <div className={`space-y-5 ${textOrder}`}>
           {eyebrow ? (

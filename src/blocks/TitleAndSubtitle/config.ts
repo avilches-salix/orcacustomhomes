@@ -14,6 +14,23 @@ export const TitleAndSubtitle: Block = {
       label: 'Eyebrow',
     },
     {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'default',
+      label: 'Variant',
+      options: [
+        {
+          label: 'Default',
+          value: 'default',
+        },
+        {
+          label: 'Hero',
+          value: 'hero',
+        },
+      ],
+      required: true,
+    },
+    {
       name: 'title',
       type: 'text',
       label: 'Title',

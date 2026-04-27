@@ -2,15 +2,17 @@ type TitleAndSubtitleBlockProps = {
   eyebrow?: string | null
   subtitle: string
   title: string
+  variant?: 'default' | 'hero' | null
 }
 
 export function TitleAndSubtitleBlock({
   eyebrow,
   subtitle,
   title,
+  variant,
 }: TitleAndSubtitleBlockProps) {
   return (
-    <section className="px-4 pt-28 text-center md:px-8 md:text-left">
+    <section className={`${variant === 'hero' ? 'pt-8 ' : ''}px-4 md:pt-28 md:px-8 md:text-left`}>
       <div className="mx-auto flex max-w-7xl flex-col gap-8">
         {eyebrow ? (
           <span className="text-xs font-medium uppercase tracking-[0.3em] text-neutral-500">

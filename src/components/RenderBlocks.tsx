@@ -38,6 +38,7 @@ type TitleAndSubtitleLayoutBlock = {
   id?: string | null
   subtitle?: string | null
   title?: string | null
+  variant?: 'default' | 'hero' | null
 }
 
 type FormSectionLayoutBlock = {
@@ -155,6 +156,7 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
             key={key}
             subtitle={block.subtitle}
             title={block.title}
+            variant={block.variant}
           />
         )
       }
