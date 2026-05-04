@@ -63,7 +63,7 @@ export function Footer({ footer }: FooterProps) {
 
             <nav
               aria-label="Footer navigation"
-              className="ml-auto flex flex-wrap items-center gap-x-6 gap-y-3 md:justify-end"
+              className="flex w-full flex-col items-center gap-3 text-center md:ml-auto md:w-auto md:flex-row md:flex-wrap md:justify-end md:gap-x-6 md:gap-y-3"
             >
               {navItems.map((item) => (
                 <Link

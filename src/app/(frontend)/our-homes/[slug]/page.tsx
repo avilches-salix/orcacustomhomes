@@ -200,7 +200,7 @@ export default async function HomeDetailPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-stone-50 text-neutral-950">
-      <section className="mx-auto max-w-7xl px-4 pt-20 md:px-8 md:pt-28">
+      <section className="mx-auto max-w-7xl px-4 pt-32 md:px-8 md:pt-36">
         <div className="max-w-4xl space-y-3">
           <span className="inline-flex rounded-full bg-och-primary px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-white">
             {formatStatus(home.status)}
