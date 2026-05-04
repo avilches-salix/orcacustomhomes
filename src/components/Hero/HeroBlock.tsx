@@ -57,6 +57,7 @@ export function HeroBlock({
             fetchPriority="high"
             className="object-cover"
             sizes="100vw"
+            quality={75}
           />
         ) : null}
 

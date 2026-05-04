@@ -1,6 +1,7 @@
 'use client'
 
 import useEmblaCarousel from 'embla-carousel-react'
+import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
 import { ImageLightbox } from '@/components/Lightbox/ImageLightbox'
@@ -72,25 +73,31 @@ export function Carousel({ enableLightbox = false, slides }: CarouselProps) {
             <div className="flex">
               {slides.map((slide, index) => (
                 <div className="flex-[0_0_100%]" key={`${slide.src}-${index}`}>
-                  <div className="relative flex h-full w-full items-stretch overflow-hidden bg-neutral-950">
+                  <div className="relative h-[55vh] min-h-[320px] w-full overflow-hidden bg-neutral-950 md:min-h-[520px]">
                     {enableLightbox ? (
                       <button
-                        className="block h-full w-full cursor-zoom-in"
+                        className="relative block h-full w-full cursor-zoom-in"
                         onClick={() => setLightboxIndex(index)}
                         type="button"
                       >
-                        <img
+                        <Image
                           alt={slide.alt}
-                          className="block h-full w-full object-cover transition-transform duration-200 ease-out hover:scale-[1.01]"
-                          loading={index === 0 ? 'eager' : 'lazy'}
+                          className="object-cover transition-transform duration-200 ease-out hover:scale-[1.01]"
+                          fill
+                          priority={index === 0}
+                          quality={75}
+                          sizes="(max-width: 768px) 100vw, 1280px"
                           src={slide.src}
                         />
                       </button>
                     ) : (
-                      <img
+                      <Image
                         alt={slide.alt}
-                        className="block h-full w-full object-cover"
-                        loading={index === 0 ? 'eager' : 'lazy'}
+                        className="object-cover"
+                        fill
+                        priority={index === 0}
+                        quality={75}
+                        sizes="(max-width: 768px) 100vw, 1280px"
                         src={slide.src}
                       />
                     )}

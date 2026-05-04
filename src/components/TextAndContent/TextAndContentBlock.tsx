@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import type { Media } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
@@ -56,10 +58,13 @@ export function TextAndContentBlock({
         </div>
 
         <div className={imageOrder}>
-          <div className="overflow-hidden rounded-[2rem] border border-black/10 bg-stone-100 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
-            <img
+          <div className="relative h-[420px] overflow-hidden rounded-[2rem] border border-black/10 bg-stone-100 shadow-[0_20px_60px_rgba(0,0,0,0.06)] md:h-[560px]">
+            <Image
               alt={image.alt}
-              className="h-[420px] w-full object-cover md:h-[560px]"
+              className="object-cover"
+              fill
+              quality={75}
+              sizes="(max-width: 768px) 100vw, 50vw"
               src={image.url}
             />
           </div>

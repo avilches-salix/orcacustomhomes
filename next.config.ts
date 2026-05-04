@@ -25,16 +25,26 @@ const nextConfig: NextConfig = {
       {
         pathname: '/api/media/file/**',
       },
+      {
+        pathname: '/img/**',
+      },
     ],
-    remotePatterns: supabaseStorageHost
-      ? [
-          {
-            hostname: supabaseStorageHost,
-            pathname: '/**',
-            protocol: 'https',
-          },
-        ]
-      : [],
+    remotePatterns: [
+      ...(supabaseStorageHost
+        ? [
+            {
+              hostname: supabaseStorageHost,
+              pathname: '/**',
+              protocol: 'https' as const,
+            },
+          ]
+        : []),
+      {
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+        protocol: 'https',
+      },
+    ],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

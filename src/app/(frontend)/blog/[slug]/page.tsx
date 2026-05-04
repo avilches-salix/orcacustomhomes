@@ -1,5 +1,6 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
+import Image from 'next/image'
 import type { Media } from '@/payload-types'
 
 type PageProps = {
@@ -61,9 +62,13 @@ export default async function BlogPostPage({ params }: PageProps) {
       <section className="relative flex min-h-[60vh] items-end overflow-hidden">
         <div className="absolute inset-0">
           {featuredImageUrl ? (
-            <img
+            <Image
               alt={featuredImageAlt}
-              className="h-full w-full object-cover"
+              className="object-cover"
+              fill
+              priority
+              quality={75}
+              sizes="100vw"
               src={featuredImageUrl}
             />
           ) : (
@@ -121,7 +126,16 @@ export default async function BlogPostPage({ params }: PageProps) {
 
                 return (
                   <figure key={key} className="my-8">
-                    <img alt={altText} className="w-full rounded-xl" src={imgUrl} />
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+                      <Image
+                        alt={altText}
+                        className="object-cover"
+                        fill
+                        quality={75}
+                        sizes="(max-width: 768px) 100vw, 768px"
+                        src={imgUrl}
+                      />
+                    </div>
                     {block.caption ? (
                       <figcaption className="mt-2 text-sm text-neutral-500">
                         {block.caption}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 import config from '@payload-config'
@@ -123,11 +124,14 @@ function MainFeaturesSection({ image, items }: { image?: number | Media | null; 
 
   return (
     <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-      <div className="overflow-hidden rounded-[2rem] border border-black/8 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.05)]">
+      <div className="relative min-h-[320px] overflow-hidden rounded-[2rem] border border-black/8 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.05)] md:min-h-[520px]">
         {hasImage ? (
-          <img
+          <Image
             alt={image.alt}
-            className="h-full max-h-[620px] w-full object-cover"
+            className="object-cover"
+            fill
+            quality={75}
+            sizes="(max-width: 1024px) 100vw, 55vw"
             src={image.url!}
           />
         ) : (

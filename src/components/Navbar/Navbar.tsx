@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 import type { Header, Page } from '@/payload-types'
@@ -50,7 +51,14 @@ export function Navbar({ header }: NavbarProps) {
               href="/"
               onClick={() => setIsOpen(false)}
             >
-              <img className="h-10 w-10 object-contain" src="/img/logo.webp" alt="Logo" />
+              <Image
+                alt="Logo"
+                className="object-contain"
+                height={40}
+                quality={75}
+                src="/img/logo.webp"
+                width={40}
+              />
             </Link>
 
             <button

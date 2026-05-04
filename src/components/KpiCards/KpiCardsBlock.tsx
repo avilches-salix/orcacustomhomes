@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import type { Media } from '@/payload-types'
 
 type KpiCardItem = {
@@ -48,10 +50,13 @@ export function KpiCardsBlock({ eyebrow, title, subtitle, items }: KpiCardsBlock
                 key={item.number + index}
               >
                 {iconUrl ? (
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 transition-colors group-hover:bg-white/20">
-                    <img
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/10 transition-colors group-hover:bg-white/20">
+                    <Image
                       alt={mediaObj.alt || ''}
-                      className="h-10 w-10 object-contain"
+                      className="object-contain p-3"
+                      fill
+                      quality={75}
+                      sizes="64px"
                       src={iconUrl}
                     />
                   </div>

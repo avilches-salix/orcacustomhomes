@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import type { Footer, Page } from '@/payload-types'
 
@@ -55,7 +56,13 @@ export function Footer({ footer }: FooterProps) {
         <section className="w-full rounded-2xl bg-och-primary px-8 py-8 text-white shadow-[0_24px_80px_rgba(14,23,45,0.18)] md:px-12 md:py-10">
           <div className="flex w-full flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <div className="flex shrink-0 items-center gap-4">
-              <img alt="Orca Custom Homes logo" className="w-12" src="/img/logo.webp" />
+              <Image
+                alt="Orca Custom Homes logo"
+                height={48}
+                quality={75}
+                src="/img/logo.webp"
+                width={48}
+              />
               <span className="text-lg font-semibold tracking-[0.08em] text-white">
                 Orca Custom Homes
               </span>

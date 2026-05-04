@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect } from 'react'
 
 type LightboxImage = {
@@ -95,10 +96,16 @@ export function ImageLightbox({ images, index, onClose, onNext, onPrevious }: Im
         </button>
       ) : null}
 
-      <div className="max-h-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
-        <img
+      <div
+        className="relative h-[88vh] w-[min(100vw-2rem,72rem)]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <Image
           alt={image.alt}
-          className="max-h-[88vh] w-auto max-w-full rounded-2xl"
+          className="rounded-2xl object-contain"
+          fill
+          quality={75}
+          sizes="100vw"
           src={image.src}
         />
       </div>

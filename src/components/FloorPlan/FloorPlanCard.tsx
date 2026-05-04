@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useCallback, useState } from 'react'
 
 import { ImageLightbox } from '@/components/Lightbox/ImageLightbox'
@@ -25,11 +26,16 @@ export function FloorPlanCard({ alt, description, src, title }: FloorPlanCardPro
           onClick={open}
           type="button"
         >
-          <img
-            alt={alt}
-            className="w-full rounded-2xl transition-transform duration-200 ease-out hover:scale-[1.01]"
-            src={src}
-          />
+          <span className="relative block h-[360px] w-full overflow-hidden rounded-2xl md:h-[460px]">
+            <Image
+              alt={alt}
+              className="object-contain transition-transform duration-200 ease-out hover:scale-[1.01]"
+              fill
+              quality={75}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              src={src}
+            />
+          </span>
         </button>
         <div className="space-y-3 px-6 py-5">
           <h3 className="m-0 text-xl font-semibold tracking-tight text-neutral-950">{title}</h3>

@@ -1,6 +1,7 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import type { Media } from '@/payload-types'
 
@@ -47,11 +48,14 @@ export async function BlogPostsGridBlock({ title, subtitle, limit }: BlogPostsGr
               href={`/blog/${blog.slug}`}
               key={blog.id}
             >
-              <div className="aspect-[4/3] w-full overflow-hidden bg-neutral-800">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-800">
                 {imageUrl ? (
-                  <img
+                  <Image
                     alt={imageAlt}
-                    className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                    className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                    fill
+                    quality={75}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     src={imageUrl}
                   />
                 ) : (

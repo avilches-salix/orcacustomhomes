@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import config from '@payload-config'
 import { getPayload } from 'payload'
@@ -77,11 +78,14 @@ export async function HouseGridBlock({ status, title, subtitle }: HouseGridProps
                 href={`/our-homes/${home.slug}`}
                 key={home.id}
               >
-                <div className="aspect w-full overflow-hidden bg-stone-100">
+                <div className="relative h-[335px] w-full overflow-hidden bg-stone-100">
                   {image ? (
-                    <img
+                    <Image
                       alt={image.alt}
-                      className="h-[335px] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                      className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                      fill
+                      quality={75}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                       src={image.src}
                     />
                   ) : (
