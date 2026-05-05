@@ -50,7 +50,7 @@ export function TextAndContentBlock({
             </h2>
 
             {subtitle ? (
-              <div className="prose prose-base max-w-none text-neutral-600">
+              <div className="prose prose-base max-w-none text-neutral-600 [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6">
                 {isRichText(subtitle) ? <RichText data={subtitle} /> : <p>{subtitle}</p>}
               </div>
             ) : null}
