@@ -39,7 +39,7 @@ export const Homes: CollectionConfig = {
           value: 'available',
         },
         {
-          label: 'Sold',
+          label: 'Completed Homes',
           value: 'sold',
         },
         {

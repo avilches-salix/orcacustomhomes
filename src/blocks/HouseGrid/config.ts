@@ -15,7 +15,7 @@ export const HouseGrid: Block = {
       required: true,
       options: [
         {
-          label: 'Sold',
+          label: 'Completed Homes',
           value: 'sold',
         },
         {

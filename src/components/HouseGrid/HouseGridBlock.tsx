@@ -101,7 +101,7 @@ export async function HouseGridBlock({ status, title, subtitle }: HouseGridProps
                       className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${getStatusClasses(home.status)}`}
                     >
                       {home.status === 'sold'
-                        ? 'Sold'
+                        ? 'Completed Homes'
                         : home.status === 'underConstruction'
                           ? 'Under Construction'
                           : 'Available'}

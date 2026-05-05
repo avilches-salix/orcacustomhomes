@@ -52,7 +52,7 @@ function formatStatus(status: Home['status']) {
     case 'underConstruction':
       return 'Under Construction'
     case 'sold':
-      return 'Sold'
+      return 'Completed Homes'
     case 'available':
     default:
       return 'Available'
