@@ -181,7 +181,7 @@ export const Homes: CollectionConfig = {
     },
     {
       name: 'formSubtitle',
-      type: 'textarea',
+      type: 'richText',
       label: 'Form subtitle',
     },
     {

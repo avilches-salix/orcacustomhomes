@@ -1,13 +1,19 @@
 'use client'
 
 import { ContactForm } from '@/components/forms/ContactForm'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 type FormSectionBlockProps = {
   eyebrow?: string | null
   formPosition?: 'left' | 'right' | null
   formType?: 'contact' | null
-  subtitle: string
+  subtitle: SerializedEditorState | string
   title: string
+}
+
+function isRichText(value: unknown): value is SerializedEditorState {
+  return typeof value === 'object' && value !== null && 'root' in (value as object)
 }
 
 function renderForm(formType: FormSectionBlockProps['formType']) {
@@ -43,7 +49,9 @@ export function FormSectionBlock({
               {title}
             </h2>
 
-            <p className="m-0 text-base leading-7 text-white/72 md:text-lg">{subtitle}</p>
+            <div className="prose prose-base max-w-none text-white/72 prose-p:m-0 prose-p:leading-7 prose-li:my-1 prose-ul:my-0 prose-ul:list-disc prose-ul:pl-6 prose-ol:my-0 prose-ol:list-decimal prose-ol:pl-6 md:prose-lg">
+              {isRichText(subtitle) ? <RichText data={subtitle} /> : <p>{subtitle}</p>}
+            </div>
           </div>
         </div>
 

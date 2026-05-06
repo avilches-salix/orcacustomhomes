@@ -262,7 +262,21 @@ export interface CarouselBlock {
 export interface FormSectionBlock {
   eyebrow?: string | null;
   title: string;
-  subtitle: string;
+  subtitle: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   formType: 'contact';
   formPosition: 'left' | 'right';
   id?: string | null;
@@ -411,7 +425,21 @@ export interface Home {
       }[]
     | null;
   formTitle?: string | null;
-  formSubtitle?: string | null;
+  formSubtitle?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;

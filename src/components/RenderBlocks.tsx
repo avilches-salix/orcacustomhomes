@@ -47,7 +47,7 @@ type FormSectionLayoutBlock = {
   formPosition?: 'left' | 'right' | null
   formType?: 'contact' | null
   id?: string | null
-  subtitle?: string | null
+  subtitle?: SerializedEditorState | string | null
   title?: string | null
 }
 

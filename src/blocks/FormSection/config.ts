@@ -21,7 +21,7 @@ export const FormSection: Block = {
     },
     {
       name: 'subtitle',
-      type: 'textarea',
+      type: 'richText',
       label: 'Subtitle',
       required: true,
     },
