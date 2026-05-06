@@ -101,10 +101,15 @@ export const Homes: CollectionConfig = {
       ],
     },
     {
-      name: 'mainFeaturesImage',
+      name: 'mainFeaturesImages',
       type: 'upload',
-      label: 'Main features image',
+      label: 'Main features images',
       relationTo: 'media',
+      hasMany: true,
+      admin: {
+        description:
+          'Upload one or more images for the Main Features section. Images are shown complete, not cropped.',
+      },
     },
     {
       name: 'interestPoints',

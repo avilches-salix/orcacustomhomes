@@ -384,7 +384,10 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
-  mainFeaturesImage?: (number | null) | Media;
+  /**
+   * Upload one or more images for the Main Features section. Images are shown complete, not cropped.
+   */
+  mainFeaturesImages?: (number | Media)[] | null;
   interestPoints?:
     | {
         text: string;
@@ -762,7 +765,7 @@ export interface HomesSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
-  mainFeaturesImage?: T;
+  mainFeaturesImages?: T;
   interestPoints?:
     | T
     | {

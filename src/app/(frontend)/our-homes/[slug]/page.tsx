@@ -47,6 +47,13 @@ function normalizeList(items?: TextItem[] | null) {
   )
 }
 
+function normalizeMainFeatureImages(home: Home) {
+  return (
+    home.mainFeaturesImages
+      ?.filter((image): image is Media => isMediaObject(image) && Boolean(image.url)) ?? []
+  )
+}
+
 function formatStatus(status: Home['status']) {
   switch (status) {
     case 'underConstruction':
@@ -115,28 +122,39 @@ function ListSection({ items, title }: { items: string[]; title: string }) {
   )
 }
 
-function MainFeaturesSection({ image, items }: { image?: number | Media | null; items: string[] }) {
+function MainFeaturesSection({ images, items }: { images: Media[]; items: string[] }) {
   if (items.length === 0) {
     return null
   }
 
-  const hasImage = isMediaObject(image) && Boolean(image.url)
-
   return (
     <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-      <div className="relative min-h-[320px] overflow-hidden rounded-[2rem] border border-black/8 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.05)] md:min-h-[520px]">
-        {hasImage ? (
-          <Image
-            alt={image.alt}
-            className="object-cover"
-            fill
-            quality={75}
-            sizes="(max-width: 1024px) 100vw, 55vw"
-            src={image.url!}
-          />
+      <div className="rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_18px_45px_rgba(0,0,0,0.05)] md:p-6">
+        {images.length > 0 ? (
+          <div className={images.length === 1 ? 'grid' : 'grid gap-4 md:grid-cols-2'}>
+            {images.map((image, index) => (
+              <div
+                className={
+                  images.length === 1
+                    ? 'relative min-h-[320px] overflow-hidden rounded-2xl bg-stone-100 md:min-h-[520px]'
+                    : 'relative min-h-[260px] overflow-hidden rounded-2xl bg-stone-100 md:min-h-[360px]'
+                }
+                key={image.id ?? `${image.url}-${index}`}
+              >
+                <Image
+                  alt={image.alt}
+                  className="object-contain"
+                  fill
+                  quality={75}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 28vw"
+                  src={image.url!}
+                />
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="flex min-h-[320px] items-center justify-center bg-stone-100 px-6 text-center text-neutral-500">
-            Add a main features image in the CMS to display it here.
+            Add main features images in the CMS to display them here.
           </div>
         )}
       </div>
@@ -200,6 +218,7 @@ export default async function HomeDetailPage({ params }: PageProps) {
 
   const slides = getSlides(home)
   const mainFeatures = normalizeList(home.mainfeatures)
+  const mainFeatureImages = normalizeMainFeatureImages(home)
   const interestPoints = normalizeList(home.interestPoints)
 
   return (
@@ -244,7 +263,7 @@ export default async function HomeDetailPage({ params }: PageProps) {
           </section>
         ) : null}
 
-        <MainFeaturesSection image={home.mainFeaturesImage} items={mainFeatures} />
+        <MainFeaturesSection images={mainFeatureImages} items={mainFeatures} />
         <ListSection items={interestPoints} title="Interest Points" />
 
         {home.floorPlans?.length ? (
