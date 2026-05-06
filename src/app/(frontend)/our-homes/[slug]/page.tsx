@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 import config from '@payload-config'
@@ -8,6 +7,7 @@ import { getPayload } from 'payload'
 import { Carousel } from '@/components/Carousel/Carousel'
 import { FloorPlanCard } from '@/components/FloorPlan/FloorPlanCard'
 import { FormSectionBlock } from '@/components/FormSection/FormSectionBlock'
+import { MainFeaturesSection } from '@/components/MainFeatures/MainFeaturesSection'
 import type { Home, Media } from '@/payload-types'
 import type { CarouselSlide } from '@/types/types'
 
@@ -50,7 +50,17 @@ function normalizeList(items?: TextItem[] | null) {
 function normalizeMainFeatureImages(home: Home) {
   return (
     home.mainFeaturesImages
-      ?.filter((image): image is Media => isMediaObject(image) && Boolean(image.url)) ?? []
+      ?.map((image) => {
+        if (!isMediaObject(image) || !image.url) {
+          return null
+        }
+
+        return {
+          alt: image.alt,
+          src: image.url,
+        }
+      })
+      .filter((image): image is CarouselSlide => image !== null) ?? []
   )
 }
 
@@ -118,62 +128,6 @@ function ListSection({ items, title }: { items: string[]; title: string }) {
           </li>
         ))}
       </ul>
-    </section>
-  )
-}
-
-function MainFeaturesSection({ images, items }: { images: Media[]; items: string[] }) {
-  if (items.length === 0) {
-    return null
-  }
-
-  return (
-    <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-      <div className="rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_18px_45px_rgba(0,0,0,0.05)] md:p-6">
-        {images.length > 0 ? (
-          <div className={images.length === 1 ? 'grid' : 'grid gap-4 md:grid-cols-2'}>
-            {images.map((image, index) => (
-              <div
-                className={
-                  images.length === 1
-                    ? 'relative min-h-[320px] overflow-hidden rounded-2xl bg-stone-100 md:min-h-[520px]'
-                    : 'relative min-h-[260px] overflow-hidden rounded-2xl bg-stone-100 md:min-h-[360px]'
-                }
-                key={image.id ?? `${image.url}-${index}`}
-              >
-                <Image
-                  alt={image.alt}
-                  className="object-contain"
-                  fill
-                  quality={75}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 28vw"
-                  src={image.url!}
-                />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex min-h-[320px] items-center justify-center bg-stone-100 px-6 text-center text-neutral-500">
-            Add main features images in the CMS to display them here.
-          </div>
-        )}
-      </div>
-
-      <div className="space-y-5">
-        <h2 className="m-0 text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
-          Main Features
-        </h2>
-        <ul className="space-y-3 p-0">
-          {items.map((item) => (
-            <li
-              className="list-none rounded-2xl border border-black/8 bg-white px-5 py-4 text-neutral-700 shadow-[0_12px_30px_rgba(0,0,0,0.04)]"
-              key={item}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
     </section>
   )
 }
