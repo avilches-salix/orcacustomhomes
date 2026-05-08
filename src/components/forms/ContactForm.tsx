@@ -39,7 +39,7 @@ export function ContactForm() {
           <input
             className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-neutral-950"
             name="address"
-            placeholder="Project address"
+            placeholder="Property Address"
             type="text"
           />
         </label>
@@ -50,7 +50,7 @@ export function ContactForm() {
         <textarea
           className="min-h-36 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-neutral-950"
           name="message"
-          placeholder="Tell us about the home you want to build."
+          placeholder="Share a few details about the property."
         />
       </label>
 
@@ -58,7 +58,7 @@ export function ContactForm() {
         className="inline-flex items-center rounded-full bg-neutral-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
         type="submit"
       >
-        Send inquiry
+        Contact Us
       </button>
     </form>
   )
