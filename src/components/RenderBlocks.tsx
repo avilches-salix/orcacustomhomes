@@ -81,6 +81,7 @@ type HouseGridLayoutBlock = {
 }
 
 type BlogPostsGridLayoutBlock = {
+  background?: 'blue' | 'white' | null
   blockType: 'blogPostsGrid'
   id?: string | null
   limit?: number | null
@@ -214,10 +215,11 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
       case 'blogPostsGrid':
         return (
           <BlogPostsGridBlock
+            background={block.background}
             key={key}
             limit={block.limit}
             subtitle={block.subtitle}
-            title={block.title ?? ''}
+            title={block.title}
           />
         )
 

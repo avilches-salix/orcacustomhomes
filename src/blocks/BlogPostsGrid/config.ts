@@ -12,7 +12,6 @@ export const BlogPostsGrid: Block = {
       name: 'title',
       type: 'text',
       label: 'Title',
-      required: true,
     },
     {
       name: 'subtitle',
@@ -26,6 +25,23 @@ export const BlogPostsGrid: Block = {
       admin: {
         description: 'Cantidad maxima de blogs a mostrar. Dejar vacio para mostrar todos.',
       },
+    },
+    {
+      name: 'background',
+      type: 'select',
+      label: 'Background',
+      required: true,
+      defaultValue: 'blue',
+      options: [
+        {
+          label: 'Blue',
+          value: 'blue',
+        },
+        {
+          label: 'White',
+          value: 'white',
+        },
+      ],
     },
   ],
 }

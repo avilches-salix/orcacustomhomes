@@ -343,12 +343,13 @@ export interface HouseGridBlock {
  * via the `definition` "BlogPostsGridBlock".
  */
 export interface BlogPostsGridBlock {
-  title: string;
+  title?: string | null;
   subtitle?: string | null;
   /**
    * Cantidad maxima de blogs a mostrar. Dejar vacio para mostrar todos.
    */
   limit?: number | null;
+  background: 'blue' | 'white';
   id?: string | null;
   blockName?: string | null;
   blockType: 'blogPostsGrid';
@@ -750,6 +751,7 @@ export interface BlogPostsGridBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   limit?: T;
+  background?: T;
   id?: T;
   blockName?: T;
 }
