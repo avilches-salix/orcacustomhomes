@@ -7,6 +7,7 @@ import type { Media } from '@/payload-types'
 
 type BlogPostsGridBlockProps = {
   background?: 'blue' | 'white' | null
+  ctaTitle?: string | null
   limit?: number | null
   subtitle?: string | null
   title?: string | null
@@ -39,6 +40,7 @@ const backgroundStyles = {
 
 export async function BlogPostsGridBlock({
   background,
+  ctaTitle,
   title,
   subtitle,
   limit,
@@ -58,7 +60,7 @@ export async function BlogPostsGridBlock({
   })
 
   return (
-    <section className={`${styles.section} px-4 py-20 md:px-8`}>
+    <section className={`${styles.section} px-4 pb-20 pt-[90px] md:px-8`}>
       <div className="mx-auto max-w-7xl mb-10">
         {title ? (
           <h2 className={`m-0 text-4xl font-semibold tracking-tight ${styles.title}`}>{title}</h2>
@@ -110,6 +112,17 @@ export async function BlogPostsGridBlock({
       </div>
 
       {blogs.length === 0 ? <p className={styles.empty}>No hay blogs publicados.</p> : null}
+
+      {ctaTitle ? (
+        <div className="mx-auto mt-10 flex max-w-7xl justify-center">
+          <Link
+            className="inline-flex items-center rounded-full bg-neutral-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
+            href="/blog"
+          >
+            {ctaTitle}
+          </Link>
+        </div>
+      ) : null}
     </section>
   )
 }

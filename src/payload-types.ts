@@ -350,6 +350,10 @@ export interface BlogPostsGridBlock {
    */
   limit?: number | null;
   background: 'blue' | 'white';
+  /**
+   * Opcional. Si se completa, muestra un boton que lleva a /blog.
+   */
+  ctaTitle?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'blogPostsGrid';
@@ -752,6 +756,7 @@ export interface BlogPostsGridBlockSelect<T extends boolean = true> {
   subtitle?: T;
   limit?: T;
   background?: T;
+  ctaTitle?: T;
   id?: T;
   blockName?: T;
 }

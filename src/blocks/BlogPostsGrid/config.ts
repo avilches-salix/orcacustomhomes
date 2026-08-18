@@ -43,5 +43,13 @@ export const BlogPostsGrid: Block = {
         },
       ],
     },
+    {
+      name: 'ctaTitle',
+      type: 'text',
+      label: 'CTA button text',
+      admin: {
+        description: 'Opcional. Si se completa, muestra un boton que lleva a /blog.',
+      },
+    },
   ],
 }
