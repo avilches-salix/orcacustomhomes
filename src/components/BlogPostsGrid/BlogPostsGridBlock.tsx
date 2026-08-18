@@ -60,7 +60,7 @@ export async function BlogPostsGridBlock({
   })
 
   return (
-    <section className={`${styles.section} px-4 pb-20 pt-[90px] md:px-8`}>
+    <section className={`${styles.section} px-4 pb-20 md:px-8 ${title ? 'pt-[90px]' : ''}`}>
       <div className="mx-auto max-w-7xl mb-10">
         {title ? (
           <h2 className={`m-0 text-4xl font-semibold tracking-tight ${styles.title}`}>{title}</h2>
